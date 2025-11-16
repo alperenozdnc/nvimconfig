@@ -66,17 +66,6 @@ local on_attach = function(_, bufnr)
 	end, opts)
 end
 
-vim.lsp.config("lua_ls", {
-	capabilities = capabilities,
-	on_attach = on_attach,
-	settings = {
-		Lua = {
-			diagnostics = { globals = { "vim" } },
-			workspace = { library = vim.api.nvim_get_runtime_file("", true) },
-		},
-	},
-})
-
 local lsp_names = { "lua_ls", "clangd", "stylua", "eslint", "pyright", "gdscript" }
 
 for _, name in pairs(lsp_names) do
