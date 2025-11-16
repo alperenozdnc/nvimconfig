@@ -72,14 +72,6 @@ for _, name in pairs(lsp_names) do
 	vim.lsp.config(name, { capabilities = capabilities, on_attach = on_attach })
 end
 
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = { "gd", "tscn", "godot" },
-	callback = function()
-		vim.fn.serverstart("127.0.0.1:6004")
-		print("> started watching godot lsp")
-	end,
-})
-
 vim.lsp.enable(lsp_names)
 
 vim.diagnostic.config({
