@@ -1,0 +1,15 @@
+this is a very simple config solution for nvim.
+i believe that the simplest solution to a problem is the most elegant one,
+and that's why I keep this config as minimal as possible (for my own purposes ofc).
+
+i like using space as my leader key, ctrl hurts my pinky. if you use ctrl shortcuts regularly,
+it may not hurt you but you should probably stop before getting carpal tunnel.
+
+this config has
+- lazy for package management
+- treesitter for syntax highlighting
+- oil for filesystem manipulation
+- telescope for finding and grepping files
+- harpoon for switching files and terminals quickly
+- fugitive for git management
+- mason, null-ls, luasnip, for lsp, completions, autoformatting, and snippets
