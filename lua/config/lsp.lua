@@ -12,7 +12,6 @@ null_ls.setup({
 		null_ls.builtins.formatting.prettier,
 		null_ls.builtins.formatting.black,
 		null_ls.builtins.formatting.gdformat,
-        null_ls.builtins.formatting.clangd
 	},
 })
 
