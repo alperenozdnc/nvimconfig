@@ -1,0 +1,7 @@
+require("config.colorscheme")
+require("config.highlighting")
+require("config.explorer")
+require("config.navigator")
+require("config.git")
+require("config.finder")
+require("config.lsp")
