@@ -52,4 +52,4 @@ oil.setup({
 })
 
 -- love me some oil.nvim 
-keymap("n", "<leader>e", ":Oil<CR>")
+keymap("n", "<leader>e", vim.cmd.Oil)
