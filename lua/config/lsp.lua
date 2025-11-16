@@ -1,23 +1,30 @@
+local keymap = require("utils").keymap
+
+local null_ls = require("null-ls")
+local f = null_ls.builtins.formatting
+local cmp = require("cmp")
+
+-- MASON
 require("mason").setup()
 
 require("mason-lspconfig").setup({
 	ensure_installed = { "lua_ls", "stylua", "clangd", "pyright", "eslint" },
 })
 
-local null_ls = require("null-ls")
-
+-- NULL_LS
 null_ls.setup({
 	sources = {
-		null_ls.builtins.formatting.stylua,
-		null_ls.builtins.formatting.prettier,
-		null_ls.builtins.formatting.black,
-		null_ls.builtins.formatting.gdformat,
+		f.stylua,
+		f.prettier,
+		f.black,
+		f.gdformat,
 	},
 })
 
-local cmp = require("cmp")
+-- SNIPPETS
 require("luasnip.loaders.from_vscode").lazy_load()
 
+-- COMPLETIONS
 cmp.setup({
 	snippet = {
 		expand = function(args)
@@ -41,19 +48,20 @@ cmp.setup({
 	}),
 })
 
--- shared LSP settings
+-- LSP settings
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 local on_attach = function(_, bufnr)
 	local opts = { buffer = bufnr, noremap = true, silent = true }
-	vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-	vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-	vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-	vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-	vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-	vim.keymap.set("n", "[d", vim.diagnostic.get_prev, opts)
-	vim.keymap.set("n", "]d", vim.diagnostic.get_next, opts)
-	vim.keymap.set("n", "<leader>f", function()
+
+	keymap("n", "gd", vim.lsp.buf.definition, opts)
+	keymap("n", "K", vim.lsp.buf.hover, opts)
+	keymap("n", "gr", vim.lsp.buf.references, opts)
+	keymap("n", "<leader>rn", vim.lsp.buf.rename, opts)
+	keymap("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+	keymap("n", "[d", vim.diagnostic.get_prev, opts)
+	keymap("n", "]d", vim.diagnostic.get_next, opts)
+	keymap("n", "<leader>f", function()
 		vim.lsp.buf.format({ async = true })
 	end, opts)
 end
@@ -69,15 +77,11 @@ vim.lsp.config("lua_ls", {
 	},
 })
 
-vim.lsp.config("clangd", { capabilities = capabilities, on_attach = on_attach })
-vim.lsp.config("stylua", { capabilities = capabilities, on_attach = on_attach })
-vim.lsp.config("eslint", { capabilities = capabilities, on_attach = on_attach })
-vim.lsp.config("pyright", { capabilities = capabilities, on_attach = on_attach })
-vim.lsp.config("tailwindcss", { capabilities = capabilities, on_attach = on_attach })
-vim.lsp.config("gdscript", {
-	capabilities = capabilities,
-	on_attach = on_attach,
-})
+local lsp_names = { "lua_ls", "clangd", "stylua", "eslint", "pyright", "gdscript" }
+
+for _, name in pairs(lsp_names) do
+	vim.lsp.config(name, { capabilities = capabilities, on_attach = on_attach })
+end
 
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = { "gd", "tscn", "godot" },
@@ -87,15 +91,7 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
-vim.lsp.enable({
-	"lua_ls",
-	"clangd",
-	"stylua",
-	"eslint",
-	"pyright",
-	"tailwindcss",
-	"gdscript",
-})
+vim.lsp.enable(lsp_names)
 
 vim.diagnostic.config({
 	virtual_text = {
@@ -106,4 +102,3 @@ vim.diagnostic.config({
 	update_in_insert = false,
 	severity_sort = true,
 })
-
