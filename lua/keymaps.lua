@@ -27,7 +27,11 @@ keymap("n", "<leader>ce", cfgedit)
 keymap("n", "<leader>ss", cfgload)
 
 -- whos going to write :w and :q every time?
-keymap("n", "<leader>w", ":w<CR>")
+keymap("n", "<leader>w", function()
+	vim.lsp.buf.format({ async = false })
+	vim.cmd("w")
+end)
+
 keymap("n", "<leader>q", ":q<CR>")
 keymap("n", "<leader>fq", ":q!<CR>")
 
