@@ -28,8 +28,18 @@ keymap("n", "<leader>ss", cfgload)
 
 -- whos going to write :w and :q every time?
 keymap("n", "<leader>w", function()
-	vim.lsp.buf.format({ async = false })
-	vim.cmd("w")
+	local clients = vim.lsp.get_clients()
+
+	for _, client in ipairs(clients) do
+		if client.server_capabilities.documentFormattingProvider then
+			vim.lsp.buf.format({ async = false })
+			vim.cmd.write()
+
+			return
+		end
+	end
+
+	vim.cmd.write()
 end)
 
 keymap("n", "<leader>q", ":q<CR>")
