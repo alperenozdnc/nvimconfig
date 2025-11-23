@@ -118,3 +118,6 @@ function Chroot()
 end
 
 keymap("n", "<leader>root", Chroot)
+
+-- annoying mofo
+keymap("n", "<leader>llu", ":Lazy update<CR>")
