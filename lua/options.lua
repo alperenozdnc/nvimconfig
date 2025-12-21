@@ -25,3 +25,6 @@ opt.colorcolumn = "80"
 -- swap file warning are ANNOYING! like thanks man, but i use git so ain't nun' gonna be lost.
 opt.swapfile = false
 opt.autoread = true
+
+-- this has been annoying me for a while
+opt.scrolloff = 10
