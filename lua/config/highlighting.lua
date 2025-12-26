@@ -1,24 +1,32 @@
-require("nvim-treesitter.config").setup({
-	ensure_installed = {
-		"c",
-		"lua",
-		"python",
-		"javascript",
-		"typescript",
-		"gdscript",
-		"godot_resource",
-		"gdshader",
-	},
+require("nvim-treesitter").install({
+	"c",
+	"lua",
+	"python",
+	"javascript",
+	"typescript",
+	"gdscript",
+	"godot_resource",
+	"gdshader",
+})
 
-	sync_install = false,
-	auto_install = true,
+vim.api.nvim_create_autocmd("FileType", {
+	callback = function(args)
+		local bufnr = args.buf
+		local ft = vim.bo[bufnr].filetype
 
-	highlight = {
-		enable = true,
-		additional_vim_regex_highlighting = false,
-	},
+		-- map filetype -> treesitter language (new API)
+		local lang = vim.treesitter.language.get_lang(ft)
 
-	indent = {
-		enable = true,
+		if not lang then
+			return
+		end
+
+		pcall(vim.treesitter.start, bufnr, lang)
+	end,
+})
+
+vim.filetype.add({
+	extension = {
+		h = "c",
 	},
 })
