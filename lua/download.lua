@@ -21,7 +21,7 @@ return {
 	},
 	{
 		"nvim-telescope/telescope.nvim",
-		tag = "0.1.8",
+		tag = "v0.2.0",
 		dependencies = { "nvim-lua/plenary.nvim" },
 	},
 	{
@@ -48,6 +48,7 @@ return {
 			"saadparwaiz1/cmp_luasnip",
 			"rafamadriz/friendly-snippets",
 		},
+		run = "make install_jsregexp",
 	},
 	{
 		"OXY2DEV/markview.nvim",
