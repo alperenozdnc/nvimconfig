@@ -66,13 +66,40 @@ local on_attach = function(_, bufnr)
 	end, opts)
 end
 
-local lsp_names = { "lua_ls", "clangd", "stylua", "eslint", "pyright", "gdscript" }
+local lsp_names = { "lua_ls", "clangd", "stylua", "eslint", "pyright", "gdscript", "cssls", "prettier", "svelte" }
 
 for _, name in pairs(lsp_names) do
 	vim.lsp.config(name, { capabilities = capabilities, on_attach = on_attach })
 end
 
+vim.lsp.config("ts_ls", {
+	capabilities = capabilities,
+	on_attach = on_attach,
+	filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+})
+
+vim.lsp.config("cssls", {
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
+
+vim.lsp.config("emmet_ls", {
+	capabilities = capabilities,
+	on_attach = on_attach,
+	filetypes = { "html", "typescriptreact", "javascriptreact", "css", "scss" },
+	init_options = {
+		html = {
+			options = {
+				["bem.enabled"] = true,
+			},
+		},
+	},
+})
+
 vim.lsp.enable(lsp_names)
+vim.lsp.enable("ts_ls")
+vim.lsp.enable("cssls")
+vim.lsp.enable("emmet_ls")
 
 vim.diagnostic.config({
 	virtual_text = {

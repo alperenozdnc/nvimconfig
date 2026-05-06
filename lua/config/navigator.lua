@@ -1,28 +1,43 @@
 local keymap = require("utils").keymap
+local harpoon = require("harpoon")
 
-local term = require("harpoon.term")
-local mark = require("harpoon.mark")
-local ui = require("harpoon.ui")
+harpoon:setup({})
 
-keymap("n", "<leader>a", mark.add_file)
-keymap("n", "<leader>m", ui.toggle_quick_menu)
+keymap("n", "<leader>a", function()
+	harpoon:list():add()
+end)
+
+keymap("n", "<leader>m", function()
+	harpoon.ui:toggle_quick_menu(harpoon:list())
+end)
 
 keymap("n", "<leader>j", function()
-	ui.nav_file(1)
+	harpoon:list():select(1)
 end)
 keymap("n", "<leader>k", function()
-	ui.nav_file(2)
+	harpoon:list():select(2)
 end)
 keymap("n", "<leader>l", function()
-	ui.nav_file(3)
+	harpoon:list():select(3)
 end)
 keymap("n", "<leader>;", function()
-	ui.nav_file(4)
+	harpoon:list():select(4)
 end)
 
+local term_list = harpoon:list("terms")
+
+local function select_term(index)
+	if index > term_list:length() then
+		vim.cmd("terminal")
+		term_list:add()
+	else
+		term_list:select(index)
+	end
+end
+
 keymap("n", "<leader>tj", function()
-	term.gotoTerminal(1)
+	select_term(1)
 end)
 keymap("n", "<leader>tk", function()
-	term.gotoTerminal(2)
+	select_term(2)
 end)

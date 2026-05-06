@@ -35,8 +35,8 @@ rose_pine.setup({
 	},
 
 	highlight_groups = {
-		ColorColumn = { bg = "rose", blend = 10 },
-		CursorLine = { bg = "love", blend = 3 },
+		ColorColumn = { bg = "gold", blend = 10 },
+		CursorLine = { bg = "NONE", fg = "gold", blend = 10 },
 		StatusLine = { fg = "rose", bg = "love", blend = 10 },
 		Search = { bg = "gold", inherit = false },
 		GitSignsAdd = { bg = "NONE" },
@@ -50,3 +50,5 @@ vim.cmd("highlight Search guibg=#E58AC8 guifg=#1D1E2C")
 
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+
+vim.api.nvim_set_hl(0, "CursorLine", { bg = "none" })
